@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Интернет-магазин</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div id="app">
+        <div class="notifications-list">
+            <div class="notification" v-for="item of notifications" v-if="item.visible">
+                <p class="notification-text">{{item.message}}</p>
+            </div>
+        </div>
+        <div class="cart-form" v-show="isVisibleCart">
+            <span class="cart-form-title">Корзина</span>
+            <button class="cart-form-btn-close" type="button" @click="isVisibleCart = !isVisibleCart">Закрыть</button>
+            <span class="cart-form-total-price">Общая сумма: {{getCartSum()}} $</span>
+            <div class="cart-form-list">
+
+                <div class="cart-form-item" v-for="cartItem of cart" :data-id="cartItem.id_product">
+                    <img class="cart-form-item_img" src="#" alt="" width="100" height="75">
+                    <span class="cart-form-item_title">{{cartItem.product_name}}</span>
+                    <span class="cart-form-item_price">{{cartItem.price}} $</span>
+                    <span class="cart-form-item_count">{{cartItem.count}}</span>
+                    <span class="cart-form-item_total-price">{{cartItem.price * cartItem.count}} $</span>
+                    <div class="cart-form-item_buttons">
+                        <button class="cart-form-item_btn add" type="button" :data-id="cartItem.id_product"
+                            @click="addProduct(cartItem)">+</button>
+                        <button class="cart-form-item_btn remove" type="button" data-id="cartItem.id_product"
+                            @click="removeProduct(cartItem)">-</button>
+                        <button class="cart-form-item_btn remove-all" type="button" data-id="cartItem.id_product"
+                            @click="removeProductAll(cartItem)">X</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <header>
+            <div class="logo">E-shop</div>
+            <div class="cart">
+                <form action="#" class="search-form">
+                    <input type="text" class="search-field" v-model="searchLine" :changed.lazy="filterGoods()">
+                    <button class="btn-search" type="submit" @click="filterGoods()">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+                <button class="btn-cart" type="button" @click="isVisibleCart = !isVisibleCart">Корзина</button>
+            </div>
+        </header>
+        <main>
+            <div class="products">
+                <div class="product-item" v-for="product of productsFiltered" :key="product.id_product">
+                    <img src="" alt="">
+                    <div class="desc">
+                        <h3> {{ product.product_name }} </h3>
+                        <p> {{ product.price }} </p>
+                        <button class="buy-btn" @click="addProduct(product)">Купить</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
+        integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP"
+        crossorigin="anonymous"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
