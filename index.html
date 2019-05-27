@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Интернет-магазин</title>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div id="app">
+        <div class="notifications-list">
+            <div class="notification" v-for="item of notifications" v-if="item.visible">
+                <p class="notification-text">{{item.message}}</p>
+            </div>
+        </div>
+        <cart-dialog :products="cart" :visible="isVisibleCart" @close-dialog="isVisibleCart = !isVisibleCart"
+            @add-product="addProduct" @remove-product="removeProduct" @remove-product-all="removeProductAll">
+        </cart-dialog>
+        <header>
+            <div class="logo">E-shop</div>
+            <div class="cart">
+                <search @filter-search="filterGoods"></search>
+                <button class="btn-cart" type="button" @click="isVisibleCart = !isVisibleCart">Корзина</button>
+            </div>
+        </header>
+        <main>
+            <products :products="productsFiltered" @add-product="addProduct"></products>
+        </main>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.7.2/js/all.js"
+        integrity="sha384-0pzryjIRos8mFBWMzSSZApWtPl/5++eIfzYmTgBBmXYdhvxPc+XcFEk+zJwDgWbP"
+        crossorigin="anonymous"></script>
+    <script src="js/components/search.js"></script>
+    <script src="js/components/products.js"></script>
+    <script src="js/components/cart.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
